@@ -95,6 +95,7 @@ router.put('/:pid', async (req, res) => {
       category
     };
 
+
     // updating products
     await manager.updateProducts(products);
 
