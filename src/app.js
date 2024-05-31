@@ -2,6 +2,8 @@
 import express from 'express';
 import cartRouter from './routes/cart.routes.js'
 import productsRouter from './routes/products.routes.js'
+
+//app
 const app = express()
 
 //permitir leer json + ruta de static

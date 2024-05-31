@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"title": "Boox Air 2",
+		"description": "1872 x 1404 e-ink device",
+		"code": "12094",
+		"price": 349.99,
+		"status": true,
+		"stock": 4,
+		"category": "eReader"
+	},
+	{
+		"id": 2,
+		"title": "Boox Air 3",
+		"description": "1872 x 1404 e-ink device",
+		"code": "64 GB",
+		"price": 449.99,
+		"status": true,
+		"stock": 4,
+		"category": "eReader"
+	},
+	{
+		"id": 3,
+		"title": "Boox Palma",
+		"description": "small e-ink device",
+		"code": "23910",
+		"price": 249.99,
+		"status": true,
+		"stock": 3,
+		"category": "eReader"
+	},
+	{
+		"id": 4,
+		"title": "Boox Poke 5",
+		"description": "1448 x 1072 e-ink device",
+		"code": "4381",
+		"price": 159.99,
+		"status": true,
+		"stock": 3,
+		"category": "eReader"
+	},
+	{
+		"id": 5,
+		"title": "kindle paperwhite 11",
+		"description": "descirptionnn",
+		"code": "4921",
+		"price": 210.99,
+		"status": true,
+		"stock": 3,
+		"category": "eReader"
+	},
+	{
+		"id": 6,
+		"title": "Default producto",
+		"description": "Descripcion default de productotototo",
+		"code": "abc123",
+		"price": 349.99,
+		"status": true,
+		"stock": 4,
+		"category": "eReader"
+	}
+]
