@@ -1,6 +1,7 @@
 //imports
 import __dirname from './utils.js';
 import productsRouter from './routes/products.routes.js';
+import productsFront from './routes/products.front.js';
 import cartRouter from './routes/cart.routes.js';
 
 import express from 'express';
@@ -23,10 +24,11 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 
 //routes
+app.use('/products', productsFront)
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartRouter);
-app.use('/', (req,res) => {
-    res.render('index');
+
+//escuchando a cliente que se conecta
+socketServer.on('connection', (socketClient) => {
+  console.log('Cliente de id: ' + socketClient.id)
 });
-
-
