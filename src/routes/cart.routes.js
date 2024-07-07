@@ -1,18 +1,17 @@
 //imports
 import fs from 'fs';
 import {Router} from 'express';
+
+//router = /api/cart
 const router = Router();
 
 //manager
-import CartManager from '../managers/CartManager.js'
-import ProductManager from '../managers/ProductManager.js'
-const manager = new CartManager();
-const productManager = new ProductManager()
+import {CartService, ProductsService } from '../managers/index.js'
 
 router.get('/:cid', async (req, res) => {
   try {
     const cartId = parseInt(req.params.cid);
-    const carts = await manager.getCarts();
+    const carts = await CartService.getCarts();
     const cart = carts.find(c => c.id === cartId);
 
 
@@ -32,7 +31,7 @@ router.get('/:cid', async (req, res) => {
 ///add cart
 router.post('/', async (req, res) => {
   try {
-    const carts = await manager.getCarts();
+    const carts = await CartService.getCarts();
     let newId
     if (carts.length === 0) {
       newId = 1;
@@ -44,7 +43,7 @@ router.post('/', async (req, res) => {
       products : []
     }
     carts.push(newCart);
-    await manager.updateCarts(carts);
+    await CartService.updateCarts(carts);
     res.status(201).json(newCart);
   } catch (error) {
     throw new Error('Error al cargar carrito ' + error.message);
@@ -54,18 +53,18 @@ router.post('/', async (req, res) => {
 router.post('/:cid/product/:pid', async (req, res) => {
   try {
     const cartId = parseInt(req.params.cid);
-    const carts = await manager.getCarts();
+    const carts = await CartService.getCarts();
     const cart = carts.find(c => c.id === cartId);
 
     const productId = parseInt(req.params.pid);
-    const products = await productManager.getProducts();
+    const products = await ProductsService.getProducts();
     const product = products.find(p => p.id === productId);
 
     console.log(product)
     console.log(cart)
 
     if (product && cart) {
-      await manager.addProduct(cartId, productId);
+      await CartService.addProduct(cartId, productId);
       return res.status(200).json({ message: 'Product added to cart successfully' });
     } else {
       res.status(500).json({ error: "Product or cart dont exis'ts" });

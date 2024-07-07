@@ -4,13 +4,12 @@ import {Router} from 'express';
 const router = Router();
 
 //Manager
-import ProductManager from '../managers/ProductManager.js'
-const manager = new ProductManager()
+import { ProductsService } from '../managers/index.js'
 
 router.get('/', async (req, res) => {
   console.log('User conectado a productos');
   try {
-    const products = await manager.getProducts();
+    const products = await ProductsService.getProducts();
     res.send(products);
   } catch (error) {
     console.error('Error :', error);
@@ -21,7 +20,7 @@ router.get('/', async (req, res) => {
 router.get('/:pid', async (req, res) => {
   try {
     const productId = parseInt(req.params.pid);
-    const products = await manager.getProducts();
+    const products = await ProductsService.getProducts();
     const product = products.find(p => p.id === productId);
 
     if (product) {
@@ -44,7 +43,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    await manager.createProduct({ title, description, code, price, status, stock, category });
+    await ProductsService.createProduct({ title, description, code, price, status, stock, category });
     res.status(201).json({ message: 'Producto agregado correctamente' });
   } catch (error) {
     console.error('Error al crear el producto:', error);
@@ -52,7 +51,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-//modificar el producto
 router.put('/:pid', async (req, res) => {
   try {
     const productId = parseInt(req.params.pid);
@@ -63,19 +61,19 @@ router.put('/:pid', async (req, res) => {
       return res.status(400).json({ error: 'Se requiere un ID de producto válido en la ruta.' });
     }
 
-    const isValidProductId = await manager.validateProductId(productId);
+    const isValidProductId = await ProductsService.validateProductId(productId);
     if (!isValidProductId) {
       return res.status(404).json({ error: `No se encontró ningún producto con el ID ${productId}.` });
     }
 
     // code check
-    const isCodeInUse = await manager.isCodeInUse(productId, code);
+    const isCodeInUse = await ProductsService.isCodeInUse(productId, code);
     if (isCodeInUse) {
       return res.status(400).json({ error: `El código ${code} ya está en uso.` });
     }
 
     // getting current products
-    let products = await manager.getProducts();
+    let products = await ProductsService.getProducts();
 
     // finding product index
     const productIndex = products.findIndex(p => p.id === productId);
@@ -97,7 +95,7 @@ router.put('/:pid', async (req, res) => {
 
 
     // updating products
-    await manager.updateProducts(products);
+    await ProductsService.updateProducts(products);
 
     res.status(200).json({ message: `Producto con ID ${productId} actualizado correctamente` });
   } catch (error) {
@@ -116,8 +114,8 @@ router.delete('/:pid', async (req, res) => {
   }
 
   try {
-    // Delete product using ProductManager method
-    await manager.deleteProduct(productId);
+    // Delete product using ProductsService method
+    await ProductsService.deleteProduct(productId);
     res.status(200).json({ message: `Product with id ${productId} succefully deleted` });
 
   } catch (error) {
