@@ -8,7 +8,7 @@ import { ProductsService } from './managers/index.js'
 import mongoose from 'mongoose';
 import express from 'express';
 import handlebars from 'express-handlebars';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 // app
 const app = express();
@@ -23,13 +23,14 @@ const socketServer = new Server(server);
 const products = await ProductsService.getProducts();
 
 //handlebars config
-app.engine('handlebars',handlebars.engine());
+app.engine('handlebars', handlebars.engine());
 app.set('views', `${__dirname}/views`);
-app.set('view engine','handlebars');
+app.set('view engine', 'handlebars');
 
 //permitir leer json + ruta de static
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use('/', productsFront)
